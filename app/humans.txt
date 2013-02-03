@@ -1,0 +1,16 @@
+# humanstxt.org/
+
+# TEAM
+
+    Name -- @twitter
+
+# THANKS
+
+    Name -- @twitter
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, JS
+    Backbone, Underscore, jQuery, Bootstrap, require, Yeoman
+
+    Source: https://github.com/anthanh/backbone-boilerplate

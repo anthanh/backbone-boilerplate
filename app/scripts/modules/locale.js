@@ -11,12 +11,12 @@ define([
     var locales = {
 
         initialize: function(lang) {
-            console.debug('locale.initialize');
+            // console.debug('locale.initialize');
 
             moment().format();
-            console.debug('locale.initialize.moment: ' + moment('20111031', 'YYYYMMDD').fromNow());
-            console.debug('locale.initialize.numeral: ' + numeral(1000).format('0,0'));
-            console.debug('locale.initialize.lang: ' + lang);
+            // console.debug('locale.initialize.moment: ' + moment('20111031', 'YYYYMMDD').fromNow());
+            // console.debug('locale.initialize.numeral: ' + numeral(1000).format('0,0'));
+            // console.debug('locale.initialize.lang: ' + lang);
             $.i18n.init({
                 getAsync: false,
                 load: 'current',

@@ -29,7 +29,8 @@ echo "===> COVERAGE: INSTRUMENTALIZE <==="
 # instrumentalize app source code, except libraries
 cp -r $DIR/../../app $DIR/../../app-cov
 rm -r $DIR/../../app-cov/scripts
-jscoverage --no-highlight $DIR/../../app/scripts $DIR/../../app-cov/scripts
+# jscoverage --no-highlight $DIR/../../app/scripts $DIR/../../app-cov/scripts
+jscoverage $DIR/../../app/scripts $DIR/../../app-cov/scripts
 
 # Prepare index with JSONCov reporter and app-cov sources
 sed 's/logLevel = 4/logLevel = 0/g' $DIR/../../app/scripts/common.js > $DIR/../../app-cov/scripts/common.js

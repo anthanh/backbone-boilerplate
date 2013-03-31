@@ -6,34 +6,66 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <title></title>
+        <title>WebApp</title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width"/>
-
-        <!-- <link rel="stylesheet" href="styles/bootstrap.css"> -->
+        <!--[if lte IE 8]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
         <link rel="stylesheet" href="styles/index.css"/>
     </head>
     <body>
+        <!--[if lt IE 8]>
+            <p class="chromeframe">You are using an outdated browser.
+                <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <header></header>
+        <section id="main"></section>
+        <footer></footer>
 
-    <!-- Main container. -->
-    <div role="main" id="main" class="container">
-        <div class="hero-unit">
-            <h1>Cheerio!</h1>
-            <p>You now have</p>
-            <ul>
-                <li>HTML5 Boilerplate</li>
-                <li>jQuery</li>
-                <li>Backbone.js (with lodash)</li>
-                <li>Backbone LayoutManager</li>
-                <li>Require.js</li>
-                <li>Bootstrap (SASS version)</li>
-                <li>Mocha</li>
-            </ul>
-            <p>installed.</p>
-            <h3>Enjoy coding! - Yeoman</h3>
-        </div>
-    </div>
+        <script type="text/template" id="playground-template">
+            <div role="main" id="main" class="container">
+                <div class="hero-unit">
+                    <h1 data-i18n="cheerio"></h1>
+                    <p data-i18n="you_now_have"></p>
+                    <ul>
+                        <li data-i18n="basics"></li>
+                        <ul>
+                            <li>HTML5 Boilerplate</li>
+                            <li>Require.js</li>
+                        </ul>
 
+                        <li data-i18n="architectural"></li>
+                        <ul>
+                            <li>Backbone.js (with lodash)</li>
+                            <li>Backbone Marionette</li>
+                        </ul>
+
+                        <li data-i18n="ui"></li>
+                        <ul>
+                            <li>jQuery</li>
+                            <li>Bootstrap (SASS version)</li>
+                        </ul>
+
+                        <li data-i18n="localization"></li>
+                        <ul>
+                            <li>i18next</li>
+                            <li>Moment</li>
+                            <li>Numeral</li>
+                        </ul>
+
+                        <li data-i18n="testing"></li>
+                        <ul>
+                            <li>PhamtomJS</li>
+                            <li>Mocha</li>
+                            <li>Sinon</li>
+                        </ul>
+                    </ul>
+                    <p data-i18n="installed"></p>
+                    <h3 data-i18n="enjoy"></h3>
+                </div>
+            </div>
+        </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->

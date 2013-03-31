@@ -11,6 +11,6 @@
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3, JS
-    Backbone, Underscore, jQuery, Bootstrap, require, Yeoman
+    Backbone, Underscore, jQuery, Bootstrap, require, i18next, moment, numeral, mocha, sinon, Yeoman
 
     Source: https://github.com/anthanh/backbone-boilerplate

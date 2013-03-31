@@ -1781,10 +1781,10 @@ function HTML(runner) {
   if (canvas.getContext) {
     canvas.style.width = canvas.width;
     canvas.style.height = canvas.height;
-    canvas.width *= devicePixelRatio;
-    canvas.height *= devicePixelRatio;
+    canvas.width *= window.devicePixelRatio;
+    canvas.height *= window.devicePixelRatio;
     ctx = canvas.getContext('2d');
-    ctx.scale(devicePixelRatio, devicePixelRatio);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     progress = new Progress;
   }
 
@@ -1816,7 +1816,10 @@ function HTML(runner) {
     var el = fragment('<li class="suite"><h1><a href="%s">%s</a></h1></li>', url, escape(suite.title));
 
     // container
-    stack[0].appendChild(el);
+    // Don't call .appendChild if #mocha-report was already .shift()'ed off the stack.
+    if (stack[0]) {
+      stack[0].appendChild(el);
+    }
     stack.unshift(document.createElement('ul'));
     el.appendChild(stack[0]);
   });
@@ -1885,7 +1888,9 @@ function HTML(runner) {
       pre.style.display = 'none';
     }
 
-    stack[0].appendChild(el);
+    if (stack[0]) {
+      stack[0].appendChild(el);
+    }
   });
 }
 
@@ -4661,8 +4666,8 @@ window.mocha = require('mocha');
     var Reporter = options.reporter || mocha.reporters.HTML;
     var reporter = new Reporter(runner);
     var query = parse(window.location.search || "");
-    console.log(query.grep);
-    console.log(decodeURIComponent(query.grep));
+    // console.log(query.grep);
+    // console.log(decodeURIComponent(query.grep));
     if (query.grep) runner.grep(new RegExp(decodeURIComponent(query.grep)));
     if (options.grep) runner.grep(options.grep);
     if (options.ignoreLeaks) runner.ignoreLeaks = true;

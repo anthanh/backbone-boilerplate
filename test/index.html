@@ -8,9 +8,81 @@
 </head>
 <body>
   <div id="mocha"></div>
+
+        <script type="text/template" id="playground-template">
+            <div role="main" id="main" class="container">
+                <div class="hero-unit">
+                    <h1 data-i18n="cheerio"></h1>
+                    <p data-i18n="you_now_have"></p>
+                    <ul>
+                        <li data-i18n="basics"></li>
+                        <ul>
+                            <li>HTML5 Boilerplate</li>
+                            <li>Require.js</li>
+                        </ul>
+
+                        <li data-i18n="architectural"></li>
+                        <ul>
+                            <li>Backbone.js (with lodash)</li>
+                            <li>Backbone Marionette</li>
+                        </ul>
+
+                        <li data-i18n="ui"></li>
+                        <ul>
+                            <li>jQuery</li>
+                            <li>Bootstrap (SASS version)</li>
+                        </ul>
+
+                        <li data-i18n="localization"></li>
+                        <ul>
+                            <li>i18next</li>
+                            <li>Moment</li>
+                            <li>Numeral</li>
+                        </ul>
+
+                        <li data-i18n="testing"></li>
+                        <ul>
+                            <li>PhamtomJS</li>
+                            <li>Mocha</li>
+                            <li>Sinon</li>
+                        </ul>
+                    </ul>
+                    <p data-i18n="installed"></p>
+                    <h3 data-i18n="enjoy"></h3>
+                </div>
+            </div>
+        </script>
+
   <script src="lib/mocha/mocha.js"></script>
+  <script src="lib/sinon.js"></script>
+  <script src="lib/core_extensions.js"></script>
   <!-- define globals for mocha -->
-  <script>mocha.setup({ ui: 'bdd', globals: ['_', '$', 'jQuery*', 'Backbone', 'JST'] })</script>
+  <script>
+    // exports.Base = require('./base');
+    // exports.Dot = require('./dot');
+    // exports.Doc = require('./doc');
+    // exports.TAP = require('./tap');
+    // exports.JSON = require('./json');
+    // exports.HTML = require('./html');
+    // exports.List = require('./list');
+    // exports.Min = require('./min');
+    // exports.Spec = require('./spec');
+    // exports.Nyan = require('./nyan');
+    // exports.XUnit = require('./xunit');
+    // exports.Progress = require('./progress');
+    // exports.Landing = require('./landing');
+    // exports.JSONCov = require('./json-cov');
+    // exports.HTMLCov = require('./html-cov');
+    // exports.JSONStream = require('./json-stream');
+    // exports.Teamcity = require('./teamcity');
+    mocha.setup({ ui: 'bdd',
+    reporter: function(runner) {
+            new mocha.reporters.HTML(runner);
+            new mocha.reporters.XUnit(runner);
+        },
+    ignoreLeaks: true,
+    globals: ['_', '$', 'jQuery*', 'Backbone', 'JST'] });
+</script>
   <!-- assertion framework -->
   <script src="lib/chai.js"></script>
   <script>expect = chai.expect</script>

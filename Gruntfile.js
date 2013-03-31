@@ -48,7 +48,8 @@ module.exports = function( grunt ) {
 
     // headless testing through PhantomJS
     mocha: {
-      all: ['test/**/*.html']
+      // all: ['test/**/*.html']
+      all: ['test/index.html']
     },
 
     // default watch configuration
@@ -132,7 +133,9 @@ module.exports = function( grunt ) {
     rev: {
       js: 'scripts/**/*.js',
       css: 'styles/**/*.css',
-      img: 'images/**'
+      // img: 'images/**'
+      // https://github.com/yeoman/yeoman/issues/419: yeoman can't update image revved references
+      img: ''
     },
 
     // usemin handler should point to the file containing
@@ -170,7 +173,7 @@ module.exports = function( grunt ) {
       baseUrl: './scripts',
       wrap: true,
       name: 'config'
-    },
+    }
   });
 
   // Alias the `test` task to run the `mocha` task instead

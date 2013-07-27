@@ -9,6 +9,19 @@
 <body>
   <div id="mocha"></div>
 
+        <script type="text/template" id="modal-template">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h3><i class="icon-modal-decorator"></i><span data-i18n="info"></span></h3>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" data-i18n="action_accept"></button>
+            </div>
+        </script>
+
         <script type="text/template" id="playground-template">
             <div role="main" id="main" class="container">
                 <div class="hero-unit">
@@ -49,6 +62,8 @@
                     </ul>
                     <p data-i18n="installed"></p>
                     <h3 data-i18n="enjoy"></h3>
+                    <button class="btn action-modal">Show modal</button>
+                    <button class="btn action-spiner">Show spiner (3 secs)</button>
                 </div>
             </div>
         </script>

@@ -4,11 +4,27 @@ require([
     'underscore',
     'backbone',
     'app',
+
+    // Factories
+    'modules/viewFactory',
+    'modules/modelFactory',
+
     'routers/router',
-    'views/playground'
+    'views/playground/playground',
+    'views/modal'
 ],
 
-function($, _, Backbone, app, Router, PlaygroundView) {
+function(
+    $,
+    _,
+    Backbone,
+    app,
+    viewFactory,
+    modelFactory,
+    Router,
+    PlaygroundView,
+    ModalView
+) {
     'use strict';
 
     // Define your master router on the application namespace and trigger all
@@ -18,6 +34,7 @@ function($, _, Backbone, app, Router, PlaygroundView) {
     app.addRegions({
         header: 'header',
         main: '#main',
+        modal: '#modal',
         footer: 'footer'
     });
 
@@ -26,22 +43,70 @@ function($, _, Backbone, app, Router, PlaygroundView) {
         // polyfiles, localstorage...
         // load modules
         // Load user if logged (session)
+        app.session.initialize();
 
         // load lang (usersettings or default)
         app.locale.initialize(app.common.lang);
+
+        app.modal.show(new ModalView());
 
         // Load main layout
         // Load logged header if logged
         app.main.show(new PlaygroundView());
 
         // load footer
+
+        $.ajaxSetup({
+            error: function(jqXHR) {
+                if (!jqXHR.status) {
+                    app.vent.trigger('modal', {
+                        model: new Backbone.Model({
+                            title: 'error',
+                            body: 'error_server_connection'
+                        })
+                    });
+                }
+            }
+        });
+
     });
 
     app.on('initialize:after', function() {
 
+        var miniNav = {
+            appCodeName: navigator.appCodeName,
+            appName: navigator.appName,
+            appVersion: navigator.appVersion,
+            cookieEnabled: navigator.cookieEnabled,
+            platform: navigator.platform,
+            userAgent: navigator.userAgent,
+            systemLanguage: navigator.systemLanguage
+        };
+
+        var common = {
+            production: app.common.production,
+            gatekeeper: app.common.gatekeeper,
+            paypalGateway: app.common.paypalGateway,
+            version: app.common.version,
+            clientType: app.common.clientType,
+            environment: app.common.environment,
+            apiGateway: app.common.apiGateway,
+            crossDomain: app.common.crossDomain,
+            wwwRoot: app.common.wwwRoot,
+            lang: app.common.lang,
+            logToServer: app.common.logToServer,
+            logLevel: app.common.logLevel,
+            logBuffer: app.common.logBuffer
+        };
+
+        console.info('initialize:after:');
+        console.info(window.performance);
+        console.info(miniNav);
+        console.info(screen);
+        console.info(common);
+
         // Trigger the initial route and enable HTML5 History API support, set the
         // root folder to '/' by default.  Change in app.js.
-        //TODO: cambiar root en función de si está logeado o no
         Backbone.history.start({
             // pushState: true,
             // root: app.root
@@ -72,4 +137,5 @@ function($, _, Backbone, app, Router, PlaygroundView) {
 
     app.start();
 
+    return app;
 });

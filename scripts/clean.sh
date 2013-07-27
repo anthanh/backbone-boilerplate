@@ -11,7 +11,6 @@ cd $DIR
 cd ..
 
 # temp css
-
 if [ -f app/styles/bootstrap.css ]; then
     rm app/styles/bootstrap.css
 fi
@@ -34,6 +33,9 @@ fi
 if [ -d dist ]; then
     rm -rf dist
 fi
+if [ -f dist.tar.gz ]; then
+    rm dist.tar.gz
+fi
 
 # test-coverage workspace
 if [ -d app-cov ]; then
@@ -41,16 +43,20 @@ if [ -d app-cov ]; then
 fi
 
 # test opuput
-if [ -f test/output/xunit.xml ]; then
-    rm -rf test/output/xunit.xml
-fi
+# if [ -f test/output/xunit.xml ]; then
+#     rm -rf test/output/xunit.xml
+# fi
 
-if [ -f test/output/coverage.json ]; then
-    rm -rf test/output/coverage.html
-fi
+# if [ -f test/output/coverage.json ]; then
+#     rm test/output/coverage.json
+# fi
 
-if [ -f test/output/imagen.png ]; then
-    rm -rf test/output/imagen.png
-fi
+# if [ -f test/output/index.html ]; then
+#     rm -rf test/output/index.html
+# fi
 
-echo $?
+# if [ -f test/output/imagen.png ]; then
+#     rm -rf test/output/imagen.png
+# fi
+
+exit $?

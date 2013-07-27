@@ -13,4 +13,4 @@ bash -e $DIR/test/xunit.sh
 bash -e $DIR/test/coverage.sh
 bash -e $DIR/test/phantom.sh
 
-echo $?
+exit $?

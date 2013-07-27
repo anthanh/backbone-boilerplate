@@ -12,4 +12,4 @@ echo "===> JSON-COV TO HTML-COV <==="
 # Convert JSONCov to HTMLCov
 node $DIR/../../test/lib/json2htmlcov/bin/json2htmlcov $DIR/../../test/output/coverage.json > $DIR/../../test/output/index.html
 
-echo $?
+exit $?

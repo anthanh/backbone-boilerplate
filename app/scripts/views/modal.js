@@ -3,13 +3,12 @@ define([
     'app',
     'jquery',
     'underscore',
-    'backbone',
-    'backboneMarionette',
+    'genericItemView',
     'bootstrapModal'
-], function (app, $, _, Backbone) {
+], function (app, $, _, GenericItemView) {
     'use strict';
 
-    var ModalView = Backbone.Marionette.ItemView.extend({
+    var ModalView = GenericItemView.extend({
 
         template: '#modal-template',
         className: 'modal hide fade',

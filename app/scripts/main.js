@@ -9,8 +9,12 @@ require([
     'modules/viewFactory',
     'modules/modelFactory',
 
+    // Modules
+    'modules/utils',
+    'modules/locale',
+    'modules/api',
+
     'routers/router',
-    'views/playground/playground',
     'views/modal'
 ],
 
@@ -21,8 +25,10 @@ function(
     app,
     viewFactory,
     modelFactory,
+    utils,
+    locale,
+    api,
     Router,
-    PlaygroundView,
     ModalView
 ) {
     'use strict';
@@ -45,29 +51,7 @@ function(
         // Load user if logged (session)
         app.session.initialize();
 
-        // load lang (usersettings or default)
-        app.locale.initialize(app.common.lang);
-
         app.modal.show(new ModalView());
-
-        // Load main layout
-        // Load logged header if logged
-        app.main.show(new PlaygroundView());
-
-        // load footer
-
-        $.ajaxSetup({
-            error: function(jqXHR) {
-                if (!jqXHR.status) {
-                    app.vent.trigger('modal', {
-                        model: new Backbone.Model({
-                            title: 'error',
-                            body: 'error_server_connection'
-                        })
-                    });
-                }
-            }
-        });
 
     });
 
@@ -135,7 +119,9 @@ function(
 
     });
 
-    app.start();
+    if (app.common.browserCapable) {
+        app.start();
+    }
 
     return app;
 });

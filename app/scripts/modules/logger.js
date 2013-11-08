@@ -13,17 +13,14 @@ define([
 
     var logs = [];
 
-    if (!window.console) {
-        window.console = {};
+    if (!console) {
+        console = {};
     }
-    window.console.error = console.error || function() {};
-    window.console.warn = console.warn || function() {};
-    window.console.info = console.info || function() {};
-    //ie console
-    window.console.debug = console.debug || function(data) {
-        console.log(JSON.stringify(data));
-    };
-    window.console.log = console.log || function() {};
+    console.error = console.error || function() {};
+    console.warn = console.warn || function() {};
+    console.info = console.info || function() {};
+    console.log = console.log || function() {};
+    console.debug = console.debug || function() {};
 
     var browserError = console.error;
     var browserWarning = console.warn;
@@ -57,7 +54,7 @@ define([
                 //     }
                 // };
                 addToLog(log, true);
-                if (common.isIE && (common.isIE !== 10)) {
+                if (document.all && !window.atob) { // IE9-
                     browserError(arguments);
                     // Function.prototype.call(browserError, arguments);
                     // Function.prototype.call(console.error, arguments);
@@ -74,7 +71,7 @@ define([
                 var log = defaultLogObject();
                 log.level = 1;
                 log.message.action = arguments[0];
-                if (common.isIE && (common.isIE !== 10)) {
+                if (document.all && !window.atob) { // IE9-
                     browserWarning(arguments);
                     // Function.prototype.call(browserWarning, arguments);
                     // Function.prototype.call(console.warn, arguments);
@@ -92,7 +89,7 @@ define([
                 var log = defaultLogObject();
                 log.level = 1;
                 log.message.action = arguments[0];
-                if (common.isIE && (common.isIE !== 10)) {
+                if (document.all && !window.atob) { // IE9-
                     browserInfo(arguments);
                     // Function.prototype.call(browserInfo, arguments);
                     // Function.prototype.call(console.info, arguments);
@@ -110,12 +107,12 @@ define([
                 //     level: level,
                 //     message: arguments.join(' ')
                 // };
-                if (common.isIE && (common.isIE !== 10)) {
+                if (document.all && !window.atob) { // IE9-
                     browserDebug(arguments);
                     // Function.prototype.call(browserDebug, arguments);
                     // Function.prototype.call(console.debug, arguments);
                 } else {
-                    browserDebug.call(console, arguments);
+                    // browserDebug.call(console, arguments);
                 }
                 // addToLog(log);
             }

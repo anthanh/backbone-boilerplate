@@ -18,7 +18,7 @@ cd ..
 # echo $?
 # mocha-phantomjs $DIR/../../test/index.html | grep '^<' > $DIR/../../test/output/xunit.xml
  
-# mocha-phantomjs http://192.168.1.90/welvi/test/index.html > $DIR/../../test/output/xunit.xml
+# mocha-phantomjs http://192.168.1.90/webapp/test/index.html > $DIR/../../test/output/xunit.xml
 
 # No log
 sed 's/logLevel = 4/logLevel = 0/g' $DIR/../../app/scripts/common.js > $DIR/../../app/scripts/common.bak.js
@@ -26,8 +26,8 @@ cat $DIR/../../app/scripts/common.bak.js > $DIR/../../app/scripts/common.js
 sed -e 's/XUnit/TAP/g' $DIR/../../test/index.html > $DIR/../../test/tap.html
 
 # (set_test_url.sh could change this url)
-echo http://192.168.1.90/welvi/test/index.html
-mocha-phantomjs http://192.168.1.90/welvi/test/tap.html > $DIR/../../test/output/tap.tmp
+echo http://192.168.1.90/webapp/test/index.html
+mocha-phantomjs http://192.168.1.90/webapp/test/tap.html > $DIR/../../test/output/tap.tmp
 rm $DIR/../../test/tap.html
 
 # Restore log

@@ -7,9 +7,6 @@ define([
     // Modules
     'common',
     'modules/session',
-    'modules/api',
-    'modules/utils',
-    'modules/locale',
 
     // Plugins.
     'backboneMarionette',
@@ -21,10 +18,7 @@ function(
     _,
     Backbone,
     common,
-    session,
-    api,
-    utils,
-    locale
+    session
 ) {
     'use strict';
 
@@ -44,9 +38,6 @@ function(
         root: window.location.pathname,
         common: common,
         session: session,
-        api: api,
-        utils: utils,
-        locale: locale,
         factory: {}
     };
 

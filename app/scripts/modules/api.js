@@ -1,5 +1,6 @@
 /* global define, PAYPAL, alert, paymill */
 define([
+    'app',
     'jquery',
     'underscore',
     'backbone',
@@ -9,6 +10,7 @@ define([
     // models & collections
 
 ], function(
+    app,
     $,
     _,
     Backbone,
@@ -16,6 +18,15 @@ define([
     utils
 ) {
     'use_strict';
+
+    /**
+     * MODULE
+     */
+    
+    var api = {};
+
+    // http://stackoverflow.com/questions/5241088/jquery-call-to-webservice-returns-no-transport-error
+    $.support.cors = true;
 
     /**
      * Realiza una petición a la API REST
@@ -36,16 +47,19 @@ define([
     var request = function(args) {
         args = args || {};
         args.query = args.query || '';
+        args.dataType = args.dataType || 'json';
         var url = common.apiGateway + args.resource + args.query;
         if (args.resource.indexOf('http') !== -1) {
             url = args.resource + args.query;
         }
+        args.headers = args.headers || {};
 
         var params = {
-            dataType: 'json',
+            dataType: args.dataType,
             contentType: 'application/json; charset=utf-8',
             type: args.method,
             url: url,
+            headers: args.headers,
             data: JSON.stringify(args.data)
         };
 
@@ -81,7 +95,7 @@ define([
      * @param  Function onError
      * @return jqXHR
      */
-    var login = function(username, password, remember) {
+    api.login = function(username, password, remember) {
         var data =
             'j_username=' + username +
             '&j_password=' + password +
@@ -107,14 +121,14 @@ define([
         return $.ajax(params);
     };
 
-    var logout = function() {
+    api.logout = function() {
         return request({
             method: 'GET',
             resource: 'account/logout'
         });
     };
 
-    var isLogged = function() {
+    api.isLogged = function() {
         $.ajaxSetup({
             statusCode: {
                 401: function(){
@@ -132,7 +146,7 @@ define([
      * USER
      */
 
-    var getUser = function() {
+    api.getUser = function() {
         return request({
             method: 'GET',
             resource: 'account'
@@ -144,7 +158,7 @@ define([
         });
     };
 
-    var setUser = function(user) {
+    api.setUser = function(user) {
         return request({
             method: 'POST',
             resource: 'account',
@@ -152,7 +166,7 @@ define([
         });
     };
 
-    var createUser = function(user, legacy) {
+    api.createUser = function(user, legacy) {
         legacy = legacy || false;
         var args = {
             user: user,
@@ -172,9 +186,9 @@ define([
         });
     };
 
-    var statusCodeHandlers = {
+    var _statusCodeHandlers = {
         401: function(){
-            // Redirec the to the login page.
+            // Redirect the to the login page.
             console.debug('401');
             Backbone.history.navigate('#/home', true);
         },
@@ -185,25 +199,25 @@ define([
     };
 
 
-    var initialize = function() {
+    app.addInitializer(function() {
+        app.api = api;
+
         // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
         $.ajaxSetup({
-            statusCode: statusCodeHandlers
+            statusCode: _statusCodeHandlers,
+            error: function(jqXHR) {
+                if (!jqXHR.status) {
+                    app.vent.trigger('modal:error', {
+                        model: new Backbone.Model({
+                            title: 'error',
+                            body: 'error_server_connection'
+                        })
+                    });
+                }
+            }
         });
+    });
 
-        return {
-            request: request,
-
-            login: login,
-            logout: logout,
-            isLogged: isLogged,
-
-            getUser: getUser,
-            setUser: setUser,
-            createUser: createUser
-        };
-    };
-
-    return initialize();
+    return api;
 
 });

@@ -13,5 +13,7 @@
     "username":"username",
     "name":"name",
     "lastname":"surnames",
-    "password":"password"
+    "password":"password",
+    
+    "action_accept":"Aceptar"
 }

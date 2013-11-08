@@ -18,10 +18,6 @@ bash -e scripts/clean.sh
 
 # bash -e $DIR/test/xunit.sh
 
-if [ -f dist.tar.gz ]; then
-    rm dist.tar.gz
-fi
-
 echo "===> BUILD-MIN <==="
 
 yeoman build:minify
@@ -56,9 +52,6 @@ mv dist/scripts/*.amd-app.js dist/scripts_dist/
 rm -rf dist/scripts
 mv dist/scripts_dist dist/scripts
 
-
-# rm dist/humans.txt
-
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
@@ -77,9 +70,13 @@ fi
 
 echo "===> TAR GZ <==="
 
-tar -czf dist.tar.gz dist/
+if [ -f dist.tar.gz ]; then
+    rm dist.tar.gz
+fi
+
+tar -czf dist.tar.gz dist/  --exclude=.git --exclude=.DS_Store --exclude=.buildignore
+
 # uncompress with:
 # tar -xzf archivo.tar.gz
-
 
 exit $?

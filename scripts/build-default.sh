@@ -23,8 +23,35 @@ echo "===> YEOMAN BUILD <==="
 
 yeoman build
 
-if [ -f app/styles/bootstrap.css ]; then
-    rm app/styles/bootstrap.css
+# if [ -f app/styles/bootstrap.css ]; then
+#     rm app/styles/bootstrap.css
+# fi
+
+# cp dist/styles/*.bootstrap.css app/styles/bootstrap.css
+
+echo "===> DEV VERSION <==="
+if [ -d dev ]; then
+    rm -R dev
+fi
+mkdir dev/
+cp -R app/ dev/
+cp dist/styles/*.index.css dev/styles/index.css
+
+echo "===> TAR GZ <==="
+
+if [ -d dist ]; then
+    rm -R dist
 fi
 
-cp dist/styles/*.bootstrap.css app/styles/bootstrap.css
+mv dev dist
+
+if [ -f dist.tar.gz ]; then
+    rm dist.tar.gz
+fi
+
+tar -czf dist.tar.gz dist/  --exclude=.git --exclude=.DS_Store --exclude=.buildignore
+
+# uncompress with:
+# tar -xzf archivo.tar.gz
+
+exit $?

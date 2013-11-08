@@ -43,12 +43,12 @@ sed -e 's/XUnit/JSONCov/g' -e 's/app/app-cov/g' $DIR/../../test/index.html > $DI
 echo "===> COVERAGE: MOCHA-PHANTOM <==="
 
 # Run tests with mocha under headless browser (set_test_url.sh could change this url)
-mocha-phantomjs http://192.168.1.90/welvi/test/index-cov.html > $DIR/temp.json
+mocha-phantomjs http://192.168.1.90/webapp/test/index-cov.html > $DIR/temp.json
 
-echo http://192.168.1.90/welvi/test/index-cov.html
+echo http://192.168.1.90/webapp/test/index-cov.html
 
 # Remove last line of the output
-sed '$d' $DIR/temp.json > $DIR/../../test/output/coverage.json
+# sed '$d' $DIR/temp.json > $DIR/../../test/output/coverage.json
 
 # clean up
 rm $DIR/temp.json

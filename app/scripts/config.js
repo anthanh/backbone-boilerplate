@@ -14,6 +14,8 @@ require.config({
         routers: '../scripts/routers',
         modules: '../scripts/modules',
 
+        genericItemView: '../scripts/views/GenericItemView',
+
         // Libraries.
         jquery: '../lib/jquery',
         underscore: '../lib/lodash',    //underscore with steroids

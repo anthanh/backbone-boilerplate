@@ -37,26 +37,43 @@ if [ -f dist.tar.gz ]; then
     rm dist.tar.gz
 fi
 
+# dev workspace
+if [ -d dev ]; then
+    rm -rf dev
+fi
+
 # test-coverage workspace
 if [ -d app-cov ]; then
     rm -rf app-cov
 fi
 
 # test opuput
-# if [ -f test/output/xunit.xml ]; then
-#     rm -rf test/output/xunit.xml
-# fi
+if [ -d test/locales ]; then
+    rm -rf test/locales
+fi
 
-# if [ -f test/output/coverage.json ]; then
-#     rm test/output/coverage.json
-# fi
+if [ -f test/index-cov.html ]; then
+    rm test/index-cov.html
+fi
 
-# if [ -f test/output/index.html ]; then
-#     rm -rf test/output/index.html
-# fi
+if [ -f test/output/xunit.xml ]; then
+    rm -rf test/output/xunit.xml
+fi
 
-# if [ -f test/output/imagen.png ]; then
-#     rm -rf test/output/imagen.png
-# fi
+if [ -f test/output/xunit.tmp ]; then
+    rm -rf test/output/xunit.tmp
+fi
+
+if [ -f test/output/coverage.json ]; then
+    rm test/output/coverage.json
+fi
+
+if [ -f test/output/index.html ]; then
+    rm -rf test/output/index.html
+fi
+
+if [ -f test/output/imagen.png ]; then
+    rm -rf test/output/imagen.png
+fi
 
 exit $?

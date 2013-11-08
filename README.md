@@ -130,7 +130,6 @@ Los parámetros que se pueden configurar son los siguientes:
    * 3 - `info`
    * 4 - `debug`
 * **logBuffer**: Indica el tamaño del buffer de log hasta que se envía al servidor.
-* **localesURL**: Ruta hasta los archivos de localización de i18next.
 
 
 

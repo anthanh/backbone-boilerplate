@@ -3,10 +3,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'backboneMarionette'
-], function(app, $, _, Backbone) {
+    'genericItemView'
+], function(app, $, _, Backbone, GenericItemView) {
 
-    var Playground = Backbone.Marionette.ItemView.extend({
+    var Playground = GenericItemView.extend({
         template: '#playground-template',
 
         className: 'playground',

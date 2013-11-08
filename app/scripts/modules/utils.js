@@ -1,8 +1,8 @@
 define([
+    'app',
     'jquery',
-    'jqueryspin',
-    'modules/logger'
-], function($) {
+    'jqueryspin'
+], function(app, $) {
     'use_strict';
 
     var utils = {};
@@ -89,6 +89,58 @@ define([
             spinActive = false;
         }
     };
+
+    utils.removeAccentedChars = function(text) {
+        var translateRegx = /[öäüÖÄÜáéíóúÁÉÍÓÚ]/g;
+        var translate = {
+            'ä': 'a',
+            'ö': 'o',
+            'ü': 'u',
+            'Ä': 'A',
+            'Ö': 'O',
+            'Ü': 'U',
+
+            'á': 'a',
+            'é': 'e',
+            'í': 'i',
+            'ó': 'o',
+            'ú': 'u',
+
+            'Á': 'A',
+            'É': 'E',
+            'Í': 'I',
+            'Ó': 'O',
+            'Ú': 'U'
+        };
+
+        return ( text.replace(translateRegx, function(match) {
+            return translate[match];
+        }) );
+    };
+
+    utils.isVisible = function(element) {
+        // console.debug(element.attr('class'));
+        var windowLeft = $(window).scrollLeft();
+        var windowTop = $(window).scrollTop();
+        var offset = element.offset();
+        var left = offset.left;
+        var top = offset.top;
+
+        if (top + element.height() >= windowTop &&
+        top - (element.data('appear-top-offset') || 0) <= windowTop + $(window).height() &&
+        left + element.width() >= windowLeft &&
+        left - (element.data('appear-left-offset') || 0) <= windowLeft + $(window).width()) {
+            // console.debug('VISIBLE: ' + element.attr('class'));
+            return true;
+        } else {
+            // console.debug('not visible!');
+            return false;
+        }
+    };
+
+    app.addInitializer(function() {
+        app.utils = utils;
+    });
 
     return utils;
 });

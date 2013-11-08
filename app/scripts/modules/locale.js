@@ -1,23 +1,17 @@
 /* globals define */
 define([
+    'app',
     'jquery',
     'common',
     'i18next',
     'moment',
     'numeral'
-], function($, common, i18n, moment, numeral) {
+], function(app, $, common, i18n, moment, numeral) {
     'use_strict';
 
-    var langData = {};
-
-    var locales = {
+    var locale = {
 
         initialize: function(lang) {
-            console.debug('locale.initialize');
-
-            moment().format();
-            console.debug('locale.initialize.moment: ' + moment('20111031', 'YYYYMMDD').fromNow());
-            console.debug('locale.initialize.numeral: ' + numeral(1000).format('0,0'));
             console.debug('locale.initialize.lang: ' + lang);
             $.i18n.init({
                 getAsync: false,
@@ -32,18 +26,50 @@ define([
                 interpolationPrefix: '{{',
                 interpolationSuffix: '}}'
             });
-        },
 
-        loadLang: function(lang) {
-            // app.vent('locales:loaded', lang);
+            console.debug('locale.initialize.momentLang: ' + lang.split('-')[0]);
+            moment.lang(lang.split('-')[0]);
         },
 
         setLang: function(lang) {
-            // app.vent('locales:changed', lang);
+            localStorage.lang = lang;
+            app.vent.trigger('locale:changed');
         }
 
     };
 
-    return locales;
+    app.addInitializer(function() {
+        app.locale = locale;
+
+        //TODO: remove when full i18n, VBox FF detects US
+        localStorage.lang = common.defaultLang;
+
+        var lang = localStorage.lang;
+        if (!lang) {
+            if (navigator.userLanguage) { // Explorer
+                lang = navigator.userLanguage;
+            } else if (navigator.language) { // FF
+                lang = navigator.language;
+            } else {
+                lang = common.defaultLang;
+            }
+
+            if (lang === 'es') {
+                lang = 'es-ES';
+            }
+
+            localStorage.lang = lang;
+        }
+
+        locale.initialize(lang);
+
+        app.vent.on('locale:set', locale.setLang);
+        app.vent.on('locale:changed', function() {
+            location.reload();
+        });
+
+    });
+
+    return locale;
 
 });

@@ -2,67 +2,92 @@
 define([], function() {
     'use_strict';
 
-    var mode = 'PRODUCTION';   // DEVELOPER|PRODUCTION
-    var gatekeeper = true;
+    var common = {};
 
-    var version = '1.0';
-    var clientType = 'WEB';
-    var environment = '';
-    var apiGateway = "gateway/";
-    var wwwRoot = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    var defaultLang = 'es-ES';
 
-    var logToServer = false;
+    /*
+     * ENVIROMENT & BEHAVIOUR
+     */
 
-	/*
-		0 - none
-		1 - error
-		2 - warning
-		3 - info
-		4 - debug
-	*/
-    var logLevel = 4;
-    var logBuffer = 10;
-
-    /* Check for Internet Explorer version */
-    var ieVersion = (function() { if (new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null) { return parseFloat( RegExp.$1 ); } else { return false; } })();
-
-    var isProduction = function() {
+    // DEVELOPER|PRODUCTION
+    var mode = 'DEVELOPER';
+    common.production = (function() {
         return mode === 'PRODUCTION';
-    };
+    })();
 
-    var getApiGateway = function() {
+    common.gatekeeper = true;
+
+    common.version = '1.2';
+    common.appName = 'WEBAPP';
+    common.clientType = 'WEB';
+    common.environment = '';
+
+    common.isIE8 = document.all && document.querySelector && !document.addEventListener;
+    common.browserCapable = !(document.all && !document.addEventListener);
+
+
+    /*
+     * APIGATEWAY
+     */
+
+    // Same as scripts/apiGateway.sh !!!,
+    // with "" because of bash script integration
+    // DO NOT CHANGE! Use "mode" + "apiGatewayDev" instead
+    var apiGateway = "gateway/";
+    var apiGatewayDev = 'https://www.domain.com/gateway/';
+
+    common.apiGateway = (function() {
+        if (!common.production) {
+            return apiGatewayDev;
+        }
         if (apiGateway.indexOf('http') !== -1) {
             return apiGateway;
         } else {
             return window.location.protocol + '//' + window.location.host + '/' + apiGateway;
         }
-    };
+    })();
 
     //ojo updates ie8
-    var crossDomain = function() {
-        if (apiGateway.indexOf('http') !== -1) {
+    common.crossDomain = (function() {
+        if (common.apiGateway.indexOf('http') !== -1) {
             return true;
         } else {
             return false;
         }
+    })();
+
+    common.wwwRoot = window.location.protocol + '//' + window.location.host + window.location.pathname;
+
+
+    /*
+     * LOCALES
+     */
+
+    common.defaultLang = 'es-ES';
+
+
+    /*
+     * LOGS
+     */
+
+    /* Error codes */
+    common.status = {
+        unauthorized: 401,
+        logSent: 1001
     };
 
-    return {
-        production: isProduction(),
-        gatekeeper: gatekeeper,
-        version: version,
-        clientType: clientType,
-        environment: environment,
-        apiGateway: getApiGateway(),
-        crossDomain: crossDomain(),
-        wwwRoot: wwwRoot,
-        lang: defaultLang,
-        logToServer: logToServer,
-        logLevel: logLevel,
-        logBuffer: logBuffer,
-        status: status,
-        localesURL: 'res/locales/__lng__/locales.json',
-        isIE: ieVersion
-    };
+    /*
+        0 - none
+        1 - error
+        2 - warning
+        3 - info
+        4 - debug
+    */
+    common.logLevel = (common.production? 0: 4);
+    common.logBuffer = 10;
+    common.logToServer = true;
+
+
+    return common;
 });
+

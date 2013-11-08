@@ -145,7 +145,7 @@ Para levantar un servidor de desarrollo que se actualize automáticamente a cada
 ```
 yeoman server
 ```
-La URL para acceder al front sería `http://localhost:3501`, pero lo ideal sería que fuera del siguiente estilo `http://[IP]:3501` para evitar problemas de CORS a la hora de atacar a un backend real.
+La URL para acceder al front sería `http://localhost:3501`, pero lo ideal sería que fuera del siguiente estilo `http://[IP]:3501` para evitar problemas con el CORS a la hora de atacar a un backend real.
 
 ## Ejecutar tests unitarios
 [Pendiente]

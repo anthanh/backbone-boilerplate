@@ -201,9 +201,30 @@ var profile = app.factory.model.create({
 
 ## Eventos
 
+Además de los eventos por defecto que ofrece los modelos de Backbone, es posible comunicar componentes de la arquitectura a través del `event aggregator`.
+
+Para lanzar un evento a través del `event aggregator`, en cualquier parte del código, llamar:
+```
+	app.vent.trigger('layout:change');
+```
 
 
-## Eventos de aplicación
+Para escuchar un evento del `event aggregator`:
+```
+    var MyView = GenericItemView.extend({
+        template: '#footer-template',
+
+		[...]
+
+        initialize: function() {
+            this.listenTo(app.vent, 'logged', this.showLogged);
+            this.listenTo(app.vent, 'logout', this.hideLogged);
+        },
+
+        [...]
+    });
+
+```
 
 ## Router
 
